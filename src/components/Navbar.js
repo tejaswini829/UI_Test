@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import ReactDropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -10,6 +12,26 @@ function Navbar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+ const options = [
+  { value: 'one', label: 'One' },
+  { value: 'two', label: 'Two', className: 'myOptionClassName' },
+  {
+   type: 'group', name: 'group1', items: [
+     { value: 'three', label: 'Three', className: 'myOptionClassName' },
+     { value: 'four', label: 'Four' }
+   ]
+  },
+  {
+   type: 'group', name: 'group2', items: [
+     { value: 'five', label: 'Five' },
+     { value: 'six', label: 'Six' }
+   ]
+  }
+];
+  const defaultOption = 'Services';
+  
+
+  
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -43,20 +65,29 @@ function Navbar() {
             </li>
             <li className='nav-item'>
               <Link
-                to='/services'
+                to='/about'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Services
+                About
               </Link>
             </li>
             <li className='nav-item'>
               <Link
-                to='/products'
+                
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Products
+               <ReactDropdown options={options}  value={defaultOption} placeholder="Services" />
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                to='/blog'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+               Blog
               </Link>
             </li>
 
@@ -66,7 +97,7 @@ function Navbar() {
                 className='nav-links-mobile'
                 onClick={closeMobileMenu}
               >
-                Sign Up
+                Sign Up/ Register
               </Link>
             </li>
           </ul>
